@@ -46,7 +46,7 @@ class Help(commands.Cog):
 	async def shop(self, ctx):
 		embed = discord.Embed(color=discord.Color.green())
 
-		embed.set_author(name='Магазин ролей(В РАЗРАБОТКЕ)', icon_url=ctx.author.avatar_url)
+		embed.set_author(name='Магазин ролей', icon_url=ctx.author.avatar_url)
 
 		embed.add_field(name='Майнкрафт моя жызнь', value='250 крышек. Роль поможет подчеркнуть вашу индивидуальность. (1)')
 		embed.add_field(name='20 см', value='500 крышек. Благодаря этой роли, все поймут, что вы пиздабол. (2)')

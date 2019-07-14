@@ -11,7 +11,7 @@ class Levels(commands.Cog):
 		self.bot = bot
 
 		self.bot.loop.create_task(self.save_users())
-
+		linux = '/home/maxlol98765/git/vasiliy/cogs/users.json'
 		with open(r'/home/maxlol98765/git/vasiliy/cogs/users.json', 'r') as f:
 			self.users = json.load(f)
 
@@ -85,15 +85,15 @@ class Levels(commands.Cog):
 		if not member_id in self.users:
 			await ctx.send('***Пользователь не имеет никакого уровня.***')
 		else:
-			if self.users[member_id]['level'] == 30:
+			if self.users[member_id]['level'] >= 30:
 				role = discord.utils.get(member.guild.roles, name='Bro')
 				await member.add_roles(role)
 				await ctx.send(f'{member}, достигший 30 уровня, получает роль Bro!')
-			elif self.users[member_id]['level'] == 20:
+			elif self.users[member_id]['level'] >= 20:
 				role = discord.utils.get(member.guild.roles, name='Mating on Sundays')
 				await member.add_roles(role)
 				await ctx.send(f'{member}, достигший 20 уровня, получает роль Mating on Sundays!')
-			elif self.users[member_id]['level'] == 10:
+			elif self.users[member_id]['level'] >= 10:
 				role = discord.utils.get(member.guild.roles, name='Do not Pussy')
 				r_role = discord.utils.get(member.guild.roles, name='Pussy')
 				await member.add_roles(role)
@@ -103,6 +103,74 @@ class Levels(commands.Cog):
 				await ctx.send('***Повышайте уровень, чтобы получать роли!***')
 
 	@commands.command()
+	async def buy1(self, ctx, member: discord.Member = None):
+		member = ctx.author if not member else member
+		member_id = str(member.id)
+
+		if not member_id in self.users:
+			await ctx.send('***Пользователь не имеет никакого уровня.***')
+		else:
+			if self.users[member_id]['money'] >= 250:
+				self.users[member_id]['money'] -= 250
+				role = discord.utils.get(member.guild.roles, name='Майнкрафт моя жызнь')
+				await member.add_roles(role)
+				await ctx.send(f'{member} купил роль Майнкрафт моя жызнь!')
+			else:
+				await ctx.send('***Недостаточно средств***')
+
+	@commands.command()
+	async def buy2(self, ctx, member: discord.Member = None):
+		member = ctx.author if not member else member
+		member_id = str(member.id)
+
+		if not member_id in self.users:
+			await ctx.send('***Пользователь не имеет никакого уровня.***')
+		else:
+			if self.users[member_id]['money'] >= 500:
+				self.users[member_id]['money'] -= 500
+				role = discord.utils.get(member.guild.roles, name='20см')
+				await member.add_roles(role)
+				await ctx.send(f'{member} купил роль 20см!')
+			else:
+				await ctx.send('***Недостаточно средств***')
+
+
+	@commands.command()
+	async def buy3(self, ctx, member: discord.Member = None):
+		member = ctx.author if not member else member
+		member_id = str(member.id)
+
+		if not member_id in self.users:
+			await ctx.send('***Пользователь не имеет никакого уровня.***')
+		else:
+			if self.users[member_id]['money'] >= 1000:
+				self.users[member_id]['money'] -= 1000
+				role = discord.utils.get(member.guild.roles, name='Ярость Любы')
+				await member.add_roles(role)
+				await ctx.send(f'{member} купил роль Ярость Любы!')
+			else:
+				await ctx.send('***Недостаточно средств***')
+
+
+	@commands.command()
+	async def buy4(self, ctx, member: discord.Member = None):
+		member = ctx.author if not member else member
+		member_id = str(member.id)
+
+		if not member_id in self.users:
+			await ctx.send('***Пользователь не имеет никакого уровня.***')
+		else:
+			if self.users[member_id]['money'] >= 2000:
+				self.users[member_id]['money'] -= 2000
+				role = discord.utils.get(member.guild.roles, name='Mod')
+				await member.add_roles(role)
+				await ctx.send(f'{member} купил роль Mod!')
+			else:
+				await ctx.send('***Недостаточно средств***')
+
+
+
+	@commands.command()
 	async def diceup(self, message, amount: int):
 		N = int(amount)
 		author_id = str(message.author.id)
@@ -110,10 +178,10 @@ class Levels(commands.Cog):
 
 		if roll > 50:
 			self.users[author_id]['money'] += N
-			await message.channel.send(f"❖{roll}❖ {message.author.mention} выиграл в Dice {N*2} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
+			await message.channel.send(f"❖{roll}❖ {message.author.mention} выиграл в Dice {N} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
 		elif roll == 50:
 			self.users[author_id]['money'] += N*9
-			await message.channel.send(f"❖{roll}❖ {message.author.mention} получил особый приз в {N*10} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
+			await message.channel.send(f"❖{roll}❖ {message.author.mention} получил особый приз в {N*9} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
 		elif roll < 50:
 			self.users[author_id]['money'] -= N
 			await message.channel.send(f"❖{roll}❖ {message.author.mention} проиграл в Dice {N} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
@@ -126,22 +194,43 @@ class Levels(commands.Cog):
 
 		if roll < 50:
 			self.users[author_id]['money'] += N
-			await message.channel.send(f"❖{roll}❖ {message.author.mention} выиграл в Dice {N*2} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
+			await message.channel.send(f"❖{roll}❖ {message.author.mention} выиграл в Dice {N} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
 		elif roll == 50:
 			self.users[author_id]['money'] += N*9
-			await message.channel.send(f"❖{roll}❖ {message.author.mention} получил особый приз в {N*10} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
+			await message.channel.send(f"❖{roll}❖ {message.author.mention} получил особый приз в {N*9} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
 		elif roll > 50:
 			self.users[author_id]['money'] -= N
 			await message.channel.send(f"❖{roll}❖ {message.author.mention} проиграл в Dice {N} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
 
-	#@commands.command()
-	#async def buy1(self, ctx, member):
-		#member_id = str(member.id)
-		#if self.users[member_id]['money'] >= 250:
-			#role = discord.utils.get(member.guild.roles, name='Майнкрафт моя жызнь')
-			#await member.add_roles(role)
-		#else:
-			#await ctx.send('Недостаточно крышек для покупки!')
+	@commands.command()
+	@commands.has_permissions(ban_members=True)
+	async def addmoney(self, ctx, member: discord.Member = None):
+		member = ctx.author if not member else member
+		member_id = str(member.id)
+		money = 100
+
+		self.users[member_id]['money'] += money
+		await ctx.send(f'{member} получил {money} пивных крышек!')
+
+	@commands.command()
+	@commands.has_permissions(ban_members=True)
+	async def addlvl(self, ctx, member: discord.Member = None):
+		member = ctx.author if not member else member
+		member_id = str(member.id)
+		lvl = 1
+
+		self.users[member_id]['level'] += lvl
+		await ctx.send(f'{member} получил {lvl} пивных крышек!')
+
+	@commands.command()
+	@commands.has_permissions(ban_members=True)
+	async def addexp(self, ctx, member: discord.Member = None):
+		member = ctx.author if not member else member
+		member_id = str(member.id)
+		exp = 10
+
+		self.users[member_id]['exp'] += exp
+		await ctx.send(f'{member} получил {exp} пивных крышек!')
 
 
 	@commands.Cog.listener()
@@ -164,15 +253,45 @@ class Levels(commands.Cog):
 		if isinstance(error,commands.BadFrgument):
 			await ctx.send('***Неверно введена команда (!dicedown N)!***')
 
-	#@commands.Cog.listener()
-	#@buy.error
-	#async def buy_error(self, ctx, error):
-		#if isinstance(error, commands.CheckFailure):
-			#await ctx.send('***Неверно введена команда (!buy index)!***')
-		#if isinstance(error, commands.MissingRequiredArgument):
-			#await ctx.send('***Неверно введена команда (!buy index)!***')
-		#if isinstance(error,commands.BadFrgument):
-			#await ctx.send('***Неверно введена команда (!buy index)!***')
+	@commands.Cog.listener()
+	@buy1.error
+	async def buy1_error(self, ctx, error):
+		if isinstance(error, commands.CheckFailure):
+			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+		if isinstance(error, commands.MissingRequiredArgument):
+			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+		if isinstance(error,commands.BadFrgument):
+			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+
+	@commands.Cog.listener()
+	@buy2.error
+	async def buy2_error(self, ctx, error):
+		if isinstance(error, commands.CheckFailure):
+			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+		if isinstance(error, commands.MissingRequiredArgument):
+			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+		if isinstance(error,commands.BadFrgument):
+			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+
+	@commands.Cog.listener()
+	@buy3.error
+	async def buy3_error(self, ctx, error):
+		if isinstance(error, commands.CheckFailure):
+			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+		if isinstance(error, commands.MissingRequiredArgument):
+			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+		if isinstance(error,commands.BadFrgument):
+			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+
+	@commands.Cog.listener()
+	@buy4.error
+	async def buy4_error(self, ctx, error):
+		if isinstance(error, commands.CheckFailure):
+			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+		if isinstance(error, commands.MissingRequiredArgument):
+			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+		if isinstance(error,commands.BadFrgument):
+			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
 			
 
 
