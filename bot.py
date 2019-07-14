@@ -51,17 +51,17 @@ async def testembed(ctx):
 	await ctx.send(embed=embed)
 
 
-@bot.command()
-@commands.has_permissions(kick_members=True)
-@commands.is_owner()
-async def reload(ctx, cog):
-	try:
-		bot.unload_extension(f"cogs.{cog}")
-		bot.load_extension(f"cogs.{cog}")
-		await ctx.send(f"{cog} перезагружен.")
-	except Exception as e:
-		print(f"{cog} не может быть запущен:")
-		raise e
+#@bot.command()
+#@commands.has_permissions(kick_members=True)
+#@commands.is_owner()
+#async def reload(ctx, cog):
+	#try:
+		#bot.unload_extension(f"cogs.{cog}")
+		#bot.load_extension(f"cogs.{cog}")
+		#await ctx.send(f"{cog} перезагружен.")
+	#except Exception as e:
+		#print(f"{cog} не может быть запущен:")
+		#raise e
 
 
 #Userinfo
