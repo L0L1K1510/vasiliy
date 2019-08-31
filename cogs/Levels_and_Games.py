@@ -12,14 +12,14 @@ class Levels(commands.Cog):
 
 		self.bot.loop.create_task(self.save_users())
 		linux = '/home/maxlol98765/git/vasiliy/cogs/users.json'
-		with open(r'/home/maxlol98765/git/vasiliy/cogs/users.json', 'r') as f:
+		with open(r'C:\Users\12\Desktop\BOT\cogs\users.json', 'r') as f:
 			self.users = json.load(f)
 
 	@commands.Cog.listener()
 	async def save_users(self):
 		await self.bot.wait_until_ready()
 		while not self.bot.is_closed():
-			with open(r'/home/maxlol98765/git/vasiliy/cogs/users.json', 'w') as f:
+			with open(r'C:\Users\12\Desktop\BOT\cogs\users.json', 'w') as f:
 				json.dump(self.users, f, indent=4)
 
 			await asyncio.sleep(5)
@@ -180,11 +180,14 @@ class Levels(commands.Cog):
 			self.users[author_id]['money'] += N
 			await message.channel.send(f"❖{roll}❖ {message.author.mention} выиграл в Dice {N} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
 		elif roll == 50:
-			self.users[author_id]['money'] += N*9
-			await message.channel.send(f"❖{roll}❖ {message.author.mention} получил особый приз в {N*9} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
+			self.users[author_id]['money'] -= N*5
+			await message.channel.send(f"❖{roll}❖ {message.author.mention} получил штраф в {N*5} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
 		elif roll < 50:
 			self.users[author_id]['money'] -= N
 			await message.channel.send(f"❖{roll}❖ {message.author.mention} проиграл в Dice {N} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
+		elif roll == 0 or roll == 100:
+			self.users[author_id]['money'] += N*9
+			await message.channel.send(f"❖{roll}❖ {message.author.mention} получил отобый приз в {N*9} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
 
 	@commands.command()
 	async def dicedown(self, message, amount: int):
@@ -196,11 +199,14 @@ class Levels(commands.Cog):
 			self.users[author_id]['money'] += N
 			await message.channel.send(f"❖{roll}❖ {message.author.mention} выиграл в Dice {N} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
 		elif roll == 50:
-			self.users[author_id]['money'] += N*9
-			await message.channel.send(f"❖{roll}❖ {message.author.mention} получил особый приз в {N*9} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
+			self.users[author_id]['money'] -= N*5
+			await message.channel.send(f"❖{roll}❖ {message.author.mention} получил штраф в {N*5} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
 		elif roll > 50:
 			self.users[author_id]['money'] -= N
 			await message.channel.send(f"❖{roll}❖ {message.author.mention} проиграл в Dice {N} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
+		elif roll == 0 or roll == 100:
+			self.users[author_id]['money'] += N*9
+			await message.channel.send(f"❖{roll}❖ {message.author.mention} получил отобый приз в {N*9} пивные(-ых) крышки(-ек)! ☉{self.users[author_id]['money']}☉")
 
 	@commands.command()
 	@commands.has_permissions(ban_members=True)
@@ -220,7 +226,7 @@ class Levels(commands.Cog):
 		lvl = 1
 
 		self.users[member_id]['level'] += lvl
-		await ctx.send(f'{member} получил {lvl} пивных крышек!')
+		await ctx.send(f"{member} получил {self.users[member_id]['level']} уровень!")
 
 	@commands.command()
 	@commands.has_permissions(ban_members=True)
@@ -230,7 +236,7 @@ class Levels(commands.Cog):
 		exp = 10
 
 		self.users[member_id]['exp'] += exp
-		await ctx.send(f'{member} получил {exp} пивных крышек!')
+		await ctx.send(f'{member} получил {exp} опыта!')
 
 
 	@commands.Cog.listener()
@@ -257,41 +263,41 @@ class Levels(commands.Cog):
 	@buy1.error
 	async def buy1_error(self, ctx, error):
 		if isinstance(error, commands.CheckFailure):
-			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+			await ctx.send('***Неверно введена команда (!buy[index] при покупке себе, member писать не надо)!***')
 		if isinstance(error, commands.MissingRequiredArgument):
-			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+			await ctx.send('***Неверно введена команда (!buy[index] при покупке себе, member писать не надо)!***')
 		if isinstance(error,commands.BadFrgument):
-			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+			await ctx.send('***Неверно введена команда (!buy[index] при покупке себе, member писать не надо)!***')
 
 	@commands.Cog.listener()
 	@buy2.error
 	async def buy2_error(self, ctx, error):
 		if isinstance(error, commands.CheckFailure):
-			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+			await ctx.send('***Неверно введена команда (!buy[index] при покупке себе, member писать не надо)!***')
 		if isinstance(error, commands.MissingRequiredArgument):
-			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+			await ctx.send('***Неверно введена команда (!buy[index] при покупке себе, member писать не надо)!***')
 		if isinstance(error,commands.BadFrgument):
-			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+			await ctx.send('***Неверно введена команда (!buy[index] при покупке себе, member писать не надо)!***')
 
 	@commands.Cog.listener()
 	@buy3.error
 	async def buy3_error(self, ctx, error):
 		if isinstance(error, commands.CheckFailure):
-			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+			await ctx.send('***Неверно введена команда (!buy[index] при покупке себе, member писать не надо)!***')
 		if isinstance(error, commands.MissingRequiredArgument):
-			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+			await ctx.send('***Неверно введена команда (!buy[index] при покупке себе, member писать не надо)!***')
 		if isinstance(error,commands.BadFrgument):
-			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+			await ctx.send('***Неверно введена команда (!buy[index] при покупке себе, member писать не надо)!***')
 
 	@commands.Cog.listener()
 	@buy4.error
 	async def buy4_error(self, ctx, error):
 		if isinstance(error, commands.CheckFailure):
-			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+			await ctx.send('***Неверно введена команда (!buy[index] при покупке себе, member писать не надо)!***')
 		if isinstance(error, commands.MissingRequiredArgument):
-			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+			await ctx.send('***Неверно введена команда (!buy[index] при покупке себе, member писать не надо)!***')
 		if isinstance(error,commands.BadFrgument):
-			await ctx.send('***Неверно введена команда (!buy[index] [member] при покупке себе, member писать не надо)!***')
+			await ctx.send('***Неверно введена команда (!buy[index] при покупке себе, member писать не надо)!***')
 			
 
 

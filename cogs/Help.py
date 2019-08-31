@@ -13,7 +13,7 @@ class Help(commands.Cog):
 
 		embed.add_field(name='Пользовательские', value='help, userinfo, roleinfo, diceinfo, giverole, diceup, dicedown, level, echo(say)')
 		embed.add_field(name='Модераторские', value='kick, clear, reload')
-		embed.add_field(name='Администраторские', value='ban')
+		embed.add_field(name='Администраторские', value='ban, addmoney, addexp, addlvl')
 
 		await ctx.send(embed=embed)
 
@@ -38,7 +38,8 @@ class Help(commands.Cog):
 
 		embed.add_field(name='!diceup N', value='Используя данную команду, вы ставите N своих крышек на то, что случайно выбраное ботом число будет ***больше*** 50. Если вы угадываете, то получаете на свой счёт в 2 раза больше, чем поставили. В противном случае, вы теряете N крышек.', inline=False)
 		embed.add_field(name='!dicedown N', value='Используя данную команду, вы ставите N своих крышек на то, что случайно выбраное ботом число будет ***меньше*** 50. Если вы угадываете, то получаете на свой счёт в 2 раза больше, чем поставили. В противном случае, вы теряете N крышек.', inline=False)
-		embed.add_field(name='Особый выигрыш', value='Если выпадает число 50, вы получаете N в десятикратном размере.', inline=False)
+		embed.add_field(name='Штраф', value='Если выпадает число 50, вы получаете штраф N в пятикратном размере.', inline=False)
+		embed.add_field(name='Особый выигрыш', value='Если выпадает число 0 или 100, вы получаете N в десятикратном размере.', inline=False)
 
 		await ctx.send(embed=embed)
 
@@ -53,6 +54,20 @@ class Help(commands.Cog):
 		embed.add_field(name='Ярость Любы', value='1000 крышек. Ибо нехуй. (3)')
 		embed.add_field(name='Mod', value='2000 крышек. Данная роль наделяет владельца правами модератора (4)')
 		embed.add_field(name='Внимание', value='Цифра в скобках, индивидуальный номер для покупки роли.')
+
+		await ctx.send(embed=embed)
+
+	@commands.command()
+	async def donate(self, ctx):
+		embed = discord.Embed(color=discord.Color.green())
+
+		embed.set_author(name='Магазин ролей', icon_url=ctx.author.avatar_url)
+
+		embed.add_field(name='100 крышек', value='10 рублей')
+		embed.add_field(name='10 опыта', value='5 рублей')
+		embed.add_field(name='1 уровень', value='20 рублей')
+		embed.add_field(name='Роль модератора', value='Отсосать у админа')
+		embed.add_field(name='Обращаться', value='L0L1K#9280.')
 
 		await ctx.send(embed=embed)
 
