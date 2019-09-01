@@ -19,7 +19,7 @@ async def on_ready():
 #AutoRole
 @bot.event
 async def on_member_join(member):
-	role = discord.utils.get(member.guild.roles, name='Pussy')
+	role = discord.utils.get(member.guild.roles, name='Start role')
 	await member.add_roles(role)
 
 #Chat
